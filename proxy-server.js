@@ -12,13 +12,13 @@ app.use(express.json());
 // HTTPS server options with client authentication
 const httpsOptions = {
   // Server's own certificates
-  key: fs.readFileSync('keys/server-key.pem'),
-  cert: fs.readFileSync('keys/server-cert.pem'),
+  key: fs.readFileSync(process.env.SERVER_KEY || 'keys/server-key.pem'),
+  cert: fs.readFileSync(process.env.SERVER_CERT || 'keys/server-cert.pem'),
   
   // Client authentication settings
   requestCert: true,  // Require client certificate
   rejectUnauthorized: true,  // Reject requests without valid client certificates
-  ca: [fs.readFileSync('keys/ca-cert.pem')]  // Certificate authority that signed client certs
+  ca: [fs.readFileSync(process.env.CA_CERT || 'keys/ca-cert.pem')]  // Certificate authority that signed client certs
 };
 
 // Middleware to verify client certificate
